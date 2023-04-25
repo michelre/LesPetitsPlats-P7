@@ -30,6 +30,7 @@ main {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 3%;
 }
 
 #searchBar-input {
@@ -57,4 +58,59 @@ main {
 
 #searchBar-btn:hover {
     cursor: pointer;
+}
+
+/* LISTBOXS TAGS */
+.tags {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+#listboxs {
+    display: flex;
+    gap: 20px;
+}
+
+#listboxs button {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 15px;
+    border: 0;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 15px;
+    min-width: 170px;
+    max-width: max-content;
+    color: white;
+}
+
+#listboxs button[data-tag-type="ingredients"], .tag[data-tag-type="ingredients"] {
+    background-color: #3282F7;
+}
+
+#listboxs button[data-tag-type="appliance"], .tag[data-tag-type="appliance"]{
+    background-color: #68D9A4;
+}
+
+#listboxs button[data-tag-type="ustensils"], .tag[data-tag-type="ustensils"]{
+    background-color: #ED6454;
+}
+
+#listboxs button input {
+    display: none;
+    width: 50%;
+     color: white;
+    border: 0;
+    background-color: transparent;
+}
+
+#listboxs button span {
+    font-family: 'Lato', sans-serif;
+    font-size: 1em;
+    font-weight: 700;
 }
