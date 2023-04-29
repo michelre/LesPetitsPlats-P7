@@ -1,5 +1,5 @@
 // Fonction de création de la card recette comprenant toutes leurs informations
-function recipesFactory(data) {
+function recipesFactory(recipe) {
     const { name, ingredients, time, description, appliance, ustensils } = recipe
 
     // Création du DOM de la carte recette
@@ -46,5 +46,34 @@ function recipesFactory(data) {
         const ingredientsList = document.createElement('ul');
         ingredientsList.classList.add('card-ingredientsList');
         main.appendChild(ingredientsList);
+
+        ingredients.forEach((ingredient) => {
+            const ingredientsLine = document.createElement('li');
+            ingredientsLine.classList.add('card-ingredient');
+
+            const ingredientsItem = document.createElement('p');
+            ingredientsItem.textContent = `${ingredient['ingredient']}`;
+            ingredientsLine.appendChild(ingredientsItem)
+
+            const ingredientsQty = document.createElement('span')
+            // Cas de figure où la liste d'ingrédients contient une unité en plus de la quantité
+            if (('ingredient' in ingredient) & ('quantity' in ingredient) & ('unit' in ingredient)) {
+				ingredientsQty.textContent = `: ${ingredient['quantity']}${ingredient['unit']}`
+            // Cas de figure où la liste d'ingrédients ne contient qu'une quantité
+			} else if (('ingredient' in ingredient) & ('quantity' in ingredient)) {
+				ingredientsQty.textContent = `: ${ingredient['quantity']}`
+			}
+            ingredientsItem.appendChild(ingredientsQty);
+            ingredientsList.appendChild(ingredientsLine);
+        })
+
+        const description = document.createElement('p');
+        description.classList.add('card-description');
+        description.textContent = description.slice(0, 150) + '...';
+        ingredientsList.appendChild(description);
+
+        return card
     }
+
+    return { getRecipesCardDOM };
 }

@@ -207,13 +207,14 @@ main {
     font-family: 'Lato', sans-serif;
     font-size: .8rem;
     line-height: 1.3rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
+    
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.card-ingredient span {
+.card-ingredient p {
     font-weight: bold;
+    padding-right: 5px;
 }
 
 .card-description {
