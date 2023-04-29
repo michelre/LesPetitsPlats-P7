@@ -59,7 +59,7 @@ function recipeFactory(recipe) {
             const ingredientsQty = document.createElement('span')
             // Cas de figure où la liste d'ingrédients contient une unité en plus de la quantité
             if (('ingredient' in ingredient) & ('quantity' in ingredient) & ('unit' in ingredient)) {
-				ingredientsQty.textContent = `: ${ingredient['quantity']}${ingredient['unit']}`
+				ingredientsQty.textContent = `: ${ingredient['quantity']} ${ingredient['unit']}`
             // Cas de figure où la liste d'ingrédients ne contient qu'une quantité
 			} else if (('ingredient' in ingredient) & ('quantity' in ingredient)) {
 				ingredientsQty.textContent = `: ${ingredient['quantity']}`
@@ -69,10 +69,10 @@ function recipeFactory(recipe) {
 
         })
 
-        const description = document.createElement('p');
-        description.classList.add('card-description');
-        description.textContent = description;
-        main.appendChild(description);
+        const descriptionText = document.createElement('p');
+        descriptionText.classList.add('card-description');
+        descriptionText.textContent = description;
+        main.appendChild(descriptionText);
         
         
 
