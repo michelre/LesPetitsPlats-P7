@@ -59,10 +59,10 @@ function recipeFactory(recipe) {
             const ingredientsQty = document.createElement('span')
             // Cas de figure où la liste d'ingrédients contient une unité en plus de la quantité
             if (('ingredient' in ingredient) & ('quantity' in ingredient) & ('unit' in ingredient)) {
-				ingredientsQty.textContent = `: ${ingredient['quantity']} ${ingredient['unit']}`
+				ingredientsQty.textContent = ` : ${ingredient['quantity']} ${ingredient['unit']}`
             // Cas de figure où la liste d'ingrédients ne contient qu'une quantité
 			} else if (('ingredient' in ingredient) & ('quantity' in ingredient)) {
-				ingredientsQty.textContent = `: ${ingredient['quantity']}`
+				ingredientsQty.textContent = ` : ${ingredient['quantity']}`
 			}
             ingredientsItem.appendChild(ingredientsQty);
             ingredientsList.appendChild(ingredientsLine);
