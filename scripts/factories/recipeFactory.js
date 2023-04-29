@@ -1,6 +1,6 @@
 // Fonction de création de la card recette comprenant toutes leurs informations
-function recipesFactory(recipe) {
-    const { name, ingredients, time, description, appliance, ustensils } = recipe
+function recipeFactory(recipe) {
+    const { name, ingredients, time, description, appliance, ustensils } = recipe;
 
     // Création du DOM de la carte recette
     function getRecipesCardDOM() {
@@ -8,7 +8,7 @@ function recipesFactory(recipe) {
         card.classList.add('card');
 
         const link = document.createElement('a');
-        link.setAttribute('href', '#');
+        //link.setAttribute('href', '#');
         card.appendChild(link);
 
         const img = document.createElement('div');
@@ -24,6 +24,7 @@ function recipesFactory(recipe) {
         body.appendChild(header);
 
         const h2 = document.createElement('h2');
+        h2.classList.add('card-title');
         h2.textContent = name;
         header.appendChild(h2);
 
@@ -31,8 +32,8 @@ function recipesFactory(recipe) {
         timing.classList.add('card-time');
         header.appendChild(timing);
 
-        const clock = document.createElement('img');
-        clock.setAttribute("alt", 'Horloge');
+        const clock = document.createElement('i')
+		clock.classList.add('far', 'fa-clock')
         timing.appendChild(clock);
 
         const minutes = document.createElement('p');
@@ -65,14 +66,17 @@ function recipesFactory(recipe) {
 			}
             ingredientsItem.appendChild(ingredientsQty);
             ingredientsList.appendChild(ingredientsLine);
+
         })
 
         const description = document.createElement('p');
         description.classList.add('card-description');
-        description.textContent = description.slice(0, 150) + '...';
-        ingredientsList.appendChild(description);
+        description.textContent = description;
+        main.appendChild(description);
+        
+        
 
-        return card
+        return (card);
     }
 
     return { getRecipesCardDOM };

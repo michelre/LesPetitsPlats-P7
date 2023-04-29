@@ -118,7 +118,7 @@ main {
 
 
 /* CARD RECETTE */
-.cards-container {
+#cards-container {
     margin: 40px auto;
     width: 100%;
     max-width: 1240px;
@@ -141,6 +141,9 @@ main {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     overflow: hidden;
+    
+    /* TEST AJOUT IMG */
+    background-image: url('/assets/card-test.jpg');
 }
 
 .card-img img {
@@ -215,6 +218,9 @@ main {
 .card-ingredient p {
     font-weight: bold;
     padding-right: 5px;
+}
+.card-ingredient span {
+    font-weight: normal;
 }
 
 .card-description {
