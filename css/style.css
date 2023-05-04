@@ -89,6 +89,17 @@ main {
     color: white;
 }
 
+.tri-ingredients {
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    width: 170px;
+}
+
+/* Largeur listbox une fois ouverte */
+.tri-ingredients.ouvert {
+    width: 400px;
+}
+
 #listboxs button[data-tag-type="ingredients"], .tag[data-tag-type="ingredients"] {
     background-color: #3282F7;
 }
@@ -104,7 +115,7 @@ main {
 #listboxs button input {
     display: none;
     width: 50%;
-     color: white;
+    color: white;
     border: 0;
     background-color: transparent;
 }
@@ -118,7 +129,7 @@ main {
 
 
 /* CARD RECETTE */
-.cards-container {
+#cards-container {
     margin: 40px auto;
     width: 100%;
     max-width: 1240px;
@@ -141,6 +152,9 @@ main {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     overflow: hidden;
+    
+    /* TEST AJOUT IMG */
+    background-image: url('/assets/card-test.jpg');
 }
 
 .card-img img {
@@ -166,9 +180,9 @@ main {
 .card-title {
     font-family: 'Lato', sans-serif;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1rem;
     overflow: hidden;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     text-overflow: ellipsis;
 }
 
@@ -201,29 +215,44 @@ main {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    /* Scroll quand trop d'ingredients */
+    height: 100px;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
 
 .card-ingredient {
     font-family: 'Lato', sans-serif;
     font-size: .8rem;
-    line-height: 1.3rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
+    line-height: 1rem;
+    
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.card-ingredient span {
+.card-ingredient p {
     font-weight: bold;
+    padding-right: 5px;
+}
+.card-ingredient span {
+    font-weight: normal;
 }
 
 .card-description {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
     font-size: .8rem;
-    line-height: 1.3rem;
+    line-height: 1rem;
     width: 50%;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
 }
+
+
+
+
+/* TEST COMPORTEMENT LISTBOX */
+
+
