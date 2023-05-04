@@ -31,10 +31,18 @@ function displayRecipes(recipes) {
 
 
 
-/* TEST - Affichage des Cards recette
-async function displayData(recipes) {
-    const const cardsContainer = document.querySelector(".cards-container")
+// TEST - ANIMATION AU CLIC LISTBOXS
 
-    recipes.
-}
-*/
+// Récupère l'élément du bouton
+var bouton = document.querySelector('.tri-ingredients button');
+
+// Ajoute un écouteur d'événement pour détecter le clic sur le bouton
+bouton.addEventListener('click', function() {
+
+// Récupère l'élément de la div parente du bouton
+var divParente = bouton.parentNode;
+
+// Ajoute une classe à la div parente pour agrandir sa largeur et afficher l'input de recherche
+divParente.classList.toggle('ouvert');
+
+});

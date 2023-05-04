@@ -89,6 +89,17 @@ main {
     color: white;
 }
 
+.tri-ingredients {
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    width: 170px;
+}
+
+/* Largeur listbox une fois ouverte */
+.tri-ingredients.ouvert {
+    width: 400px;
+}
+
 #listboxs button[data-tag-type="ingredients"], .tag[data-tag-type="ingredients"] {
     background-color: #3282F7;
 }
@@ -104,7 +115,7 @@ main {
 #listboxs button input {
     display: none;
     width: 50%;
-     color: white;
+    color: white;
     border: 0;
     background-color: transparent;
 }
@@ -238,3 +249,10 @@ main {
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
 }
+
+
+
+
+/* TEST COMPORTEMENT LISTBOX */
+
+
