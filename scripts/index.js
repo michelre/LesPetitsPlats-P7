@@ -1,6 +1,13 @@
+import Select from './factories/Select.js'
+
 /* REMI: Ajout des variables globales tout en haut pour faciliter le futur algo de recherche */
 // Déclaration des variables
 let recipes = []
+let selectedIngredients = []
+let selectedAppliances = []
+let selectedUstensiles = []
+
+const tags = document.querySelector('.tags')
 
 // Récupération des différentes recettes via un fetch
 async function getRecipes() {
@@ -13,7 +20,10 @@ async function init() {
     recipes = await getRecipes();
     /* REMI: Vu que recipes est une variable globale, pas besoin de la passer en paramètre à la fonction */
     displayRecipes();
-    console.log(recipes);
+    displayIngredientsSelect()
+    //TODO: A décommenter quand ingredient fonctionne
+    displayAppliancesSelect()
+    displayUstensilsSelect()
 };
 init();
 
@@ -33,6 +43,86 @@ function displayRecipes() {
     })
 }
 
+function displayIngredientsSelect() {
+    const ingredients = recipes
+        .map(recipe =>
+            recipe.ingredients
+                .map(ingredient => ingredient.ingredient)
+        ).flat()
+    const select = new Select(
+        ingredients,
+        'ingredient',
+        'Ingrédient',
+        'Recherchez vos ingrédients',
+        (ingredient) => {
+            selectedIngredients.push(ingredient)
+            const listElement = document.createElement('li')
+            listElement.innerText = ingredient
+            tags.appendChild(listElement)
+            console.log(selectedIngredients)
+
+            listElement.addEventListener('click', () => {
+                selectedIngredients = selectedIngredients
+                    .filter(selectedIngredient => selectedIngredient !== ingredient)
+                listElement.remove()
+            })
+        }
+    )
+    const triIngredients = document.querySelector('.tri-ingredients')
+    triIngredients.appendChild(select.render())
+}
+
+function displayAppliancesSelect() {
+    const appliances = recipes.map(recipe => recipe.appliance)
+    const select = new Select(
+        appliances,
+        'appareil',
+        'Appareils',
+        'Recherchez vos appareils',
+        (appliance) => {
+            selectedAppliances.push(appliance)
+            const listElement = document.createElement('li')
+            listElement.innerText = appliance
+            tags.appendChild(listElement)
+            console.log(selectedAppliances)
+
+            listElement.addEventListener('click', () => {
+                selectedAppliances = selectedAppliances
+                    .filter(selectedAppliance => selectedAppliance !== appliance)
+                listElement.remove()
+            })
+        }
+    )
+    const triIngredients = document.querySelector('.tri-appareils')
+    triIngredients.appendChild(select.render())
+}
+
+function displayUstensilsSelect() {
+    const ustensils = recipes
+        .map(recipe => recipe.ustensils)
+        .flat()
+    const select = new Select(
+        ustensils,
+        'ustensil',
+        'Ustensiles',
+        'Recherchez vos ustensiles',
+        (ustensil) => {
+            selectedUstensiles.push(ustensil)
+            const listElement = document.createElement('li')
+            listElement.innerText = ustensil
+            tags.appendChild(listElement)
+            console.log(selectedUstensiles)
+
+            listElement.addEventListener('click', () => {
+                selectedUstensiles = selectedUstensiles
+                    .filter(selectedUstensil => selectedUstensil !== ustensil)
+                listElement.remove()
+            })
+        }
+    )
+    const triIngredients = document.querySelector('.tri-ustensiles')
+    triIngredients.appendChild(select.render())
+}
 
 /* REMI: Conseils:
 * 1. Faire un composant "Select" qui prend en paramètre les éléments (ingrédients / ustensils / appareils) à afficher
@@ -49,12 +139,12 @@ function displayRecipes() {
 var bouton = document.querySelector('.tri-ingredients button');
 
 // Ajoute un écouteur d'événement pour détecter le clic sur le bouton
-bouton.addEventListener('click', function() {
+bouton.addEventListener('click', function () {
 
 // Récupère l'élément de la div parente du bouton
-var divParente = bouton.parentNode;
+    var divParente = bouton.parentNode;
 
 // Ajoute une classe à la div parente pour agrandir sa largeur et afficher l'input de recherche
-divParente.classList.toggle('ouvert');
+    divParente.classList.toggle('ouvert');
 
 });
