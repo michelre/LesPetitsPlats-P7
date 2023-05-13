@@ -133,6 +133,7 @@ function displayUstensilsSelect() {
 *  */
 
 
+/*
 // TEST - ANIMATION AU CLIC LISTBOXS
 
 // Récupère l'élément du bouton
@@ -148,3 +149,4 @@ bouton.addEventListener('click', function () {
     divParente.classList.toggle('ouvert');
 
 });
+*/
