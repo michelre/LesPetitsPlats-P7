@@ -130,7 +130,7 @@ main {
     font-family: 'Lato', sans-serif;
 }
 
-#listboxs button input {
+.listbox-input {
     display: none;
     width: 50%;
     color: white;
@@ -149,6 +149,14 @@ main {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     width: 170px;
+
+    display: none;
+}
+
+.listbox-options:active {
+    height: auto !important;
+    max-height: 450px;
+
 }
 
 .tri-ingredients ul, .tri-appareils ul, .tri-ustensiles ul {
@@ -159,6 +167,8 @@ main {
     overflow-x: hidden;
     scrollbar-width: thin;
 }
+
+
 
 
 
