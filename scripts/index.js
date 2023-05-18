@@ -42,10 +42,10 @@ function displayIngredientsSelect() {
     const ingredients = recipes
         .map(recipe =>
             recipe.ingredients
-                .map(ingredient => ingredient.ingredient)
+                .map(ingredient => ingredient.ingredient.toLowerCase())
         ).flat()
     const select = new Select(
-        ingredients,
+        Array.from(new Set(ingredients)),
         'ingredient',
         'Ingrédient',
         'Recherchez vos ingrédients',
@@ -70,9 +70,9 @@ function displayIngredientsSelect() {
 
 // Listbox : Récupération et création de la liste d'appareils
 function displayAppliancesSelect() {
-    const appliances = recipes.map(recipe => recipe.appliance)
+    const appliances = recipes.map(recipe => recipe.appliance.toLowerCase())
     const select = new Select(
-        appliances,
+        Array.from(new Set(appliances)),
         'appareil',
         'Appareils',
         'Recherchez vos appareils',
@@ -98,10 +98,10 @@ function displayAppliancesSelect() {
 // Listbox : Récupération et création de la liste d'ustensiles 
 function displayUstensilsSelect() {
     const ustensils = recipes
-        .map(recipe => recipe.ustensils)
+        .map(recipe => recipe.ustensils.map(ustensil => ustensil.toLowerCase()))
         .flat()
     const select = new Select(
-        ustensils,
+        Array.from(new Set(ustensils)),
         'ustensil',
         'Ustensiles',
         'Recherchez vos ustensiles',

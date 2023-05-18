@@ -317,5 +317,13 @@ main {
     -webkit-box-orient: vertical;
 }
 
+.fa-chevron-down {
+    transition: transform .5s linear;
+}
+
+.fa-chevron-down.opened {
+    transform: rotate(180deg);
+}
+
 
 
