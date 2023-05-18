@@ -64,10 +64,23 @@ main {
 .tags {
     display: flex;
     align-items: center;
-    padding: 5px 10px;
-    border-radius: 5px;
     list-style: none;
+    margin-top: 2%;
+    margin-bottom: 2%;
     /*color: white;*/
+}
+
+.tags li {
+    color: white;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    border-radius: 5px;
+    width: auto;
+    padding: 15px 30px 15px 15px;
+    margin-right: 10px;
 }
 
 #listboxs {

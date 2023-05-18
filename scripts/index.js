@@ -53,6 +53,7 @@ function displayIngredientsSelect() {
             selectedIngredients.push(ingredient)
             const listElement = document.createElement('li')
             listElement.innerText = ingredient
+            listElement.style.background = "#3282F7"
             tags.appendChild(listElement)
             console.log(selectedIngredients)
 
@@ -79,6 +80,7 @@ function displayAppliancesSelect() {
             selectedAppliances.push(appliance)
             const listElement = document.createElement('li')
             listElement.innerText = appliance
+            listElement.style.background = "#68D9A4"
             tags.appendChild(listElement)
             console.log(selectedAppliances)
 
@@ -107,6 +109,7 @@ function displayUstensilsSelect() {
             selectedUstensiles.push(ustensil)
             const listElement = document.createElement('li')
             listElement.innerText = ustensil
+            listElement.style.background = "#ED6454"
             tags.appendChild(listElement)
             console.log(selectedUstensiles)
 
