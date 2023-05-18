@@ -1,7 +1,6 @@
 import Select from './factories/Select.js'
 
-/* REMI: Ajout des variables globales tout en haut pour faciliter le futur algo de recherche */
-// Déclaration des variables
+// Déclaration des variables globales 
 let recipes = []
 let selectedIngredients = []
 let selectedAppliances = []
@@ -18,20 +17,15 @@ async function getRecipes() {
 async function init() {
     /* REMI: On peut stocker les recettes dans la variable globale prévue à cet effet */
     recipes = await getRecipes();
-    /* REMI: Vu que recipes est une variable globale, pas besoin de la passer en paramètre à la fonction */
     displayRecipes();
     displayIngredientsSelect()
-    //TODO: A décommenter quand ingredient fonctionne
     displayAppliancesSelect()
     displayUstensilsSelect()
 };
 init();
 
-// Déclaration des constantes
-/* REMI: Duplication de la variable recipeSection non nécessaire ici de manière globale */
-//const recipeSection = document.getElementById('cards-container');
 
-// TEST - Affichage des Cards recette via la factory recipeFactory
+// Affichage des Cards recette via la factory recipeFactory
 function displayRecipes() {
     const recipeSection = document.getElementById('cards-container');
     recipeSection.innerHTML = ''
@@ -43,6 +37,7 @@ function displayRecipes() {
     })
 }
 
+// Listbox : Récupération et création de la liste d'ingrédients 
 function displayIngredientsSelect() {
     const ingredients = recipes
         .map(recipe =>
@@ -58,6 +53,7 @@ function displayIngredientsSelect() {
             selectedIngredients.push(ingredient)
             const listElement = document.createElement('li')
             listElement.innerText = ingredient
+            listElement.style.background = "#3282F7"
             tags.appendChild(listElement)
             console.log(selectedIngredients)
 
@@ -72,6 +68,7 @@ function displayIngredientsSelect() {
     triIngredients.appendChild(select.render())
 }
 
+// Listbox : Récupération et création de la liste d'appareils
 function displayAppliancesSelect() {
     const appliances = recipes.map(recipe => recipe.appliance)
     const select = new Select(
@@ -83,6 +80,7 @@ function displayAppliancesSelect() {
             selectedAppliances.push(appliance)
             const listElement = document.createElement('li')
             listElement.innerText = appliance
+            listElement.style.background = "#68D9A4"
             tags.appendChild(listElement)
             console.log(selectedAppliances)
 
@@ -97,6 +95,7 @@ function displayAppliancesSelect() {
     triIngredients.appendChild(select.render())
 }
 
+// Listbox : Récupération et création de la liste d'ustensiles 
 function displayUstensilsSelect() {
     const ustensils = recipes
         .map(recipe => recipe.ustensils)
@@ -110,6 +109,7 @@ function displayUstensilsSelect() {
             selectedUstensiles.push(ustensil)
             const listElement = document.createElement('li')
             listElement.innerText = ustensil
+            listElement.style.background = "#ED6454"
             tags.appendChild(listElement)
             console.log(selectedUstensiles)
 
@@ -133,6 +133,7 @@ function displayUstensilsSelect() {
 *  */
 
 
+/*
 // TEST - ANIMATION AU CLIC LISTBOXS
 
 // Récupère l'élément du bouton
@@ -148,3 +149,15 @@ bouton.addEventListener('click', function () {
     divParente.classList.toggle('ouvert');
 
 });
+*/
+
+/*
+// Récupère l'élément du bouton
+const optionsBtn = document.querySelector('.listbox-button');
+const ulElement = document.querySelector('.listbox-options');
+
+// Ajoute un écouteur d'événement pour détecter le clic sur le bouton
+optionsBtn.addEventListener('click', () => {
+    ulElement.style.overflow = "visible";
+});
+*/

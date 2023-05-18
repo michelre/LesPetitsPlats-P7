@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Lato&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/dc83823775.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body> 
 
     <header role="banner" tabindex="0">
         <a class="header-nav" href="#" title="Retourner à la page d'accueil">
@@ -34,86 +34,32 @@
 
         <!-- Section regroupant les 3 sortes de tri -->
         <section id="listboxs">
+
             <!-- Tri via une listbox des Ingrédients -->
             <div class="tri-ingredients">
-                <button aria-haspopup="listbox" aria-expanded="true" aria-selected="true" data-tag-type="ingredients">
-                    <div>
-                        <span>Ingrédients</span>
-                        <input type="text" placeholder="Rechercher un ingrédient">
-                    </div>
-                    <i class="fa fa-solid fa-chevron-down"></i>
-                </button>
+                <!-- Ajout dynamique JS -->
             </div>
             <!-- Tri via une listbox des Appareils -->
             <div class="tri-appareils">
-                <button aria-haspopup="listbox" aria-expanded="true" aria-selected="true" data-tag-type="appliance">
-                    <div>
-                        <span>Appareils</span>
-                        <input type="text" placeholder="Recherchez un appareil">
-                    </div>
-                    <i class="fa fa-solid fa-chevron-down"></i>
-                </button>
+                <!-- Ajout dynamique JS -->
             </div>
             <!-- Tri via une listbox des Ustensiles -->
             <div class="tri-ustensiles">
-                <button aria-haspopup="listbox" aria-expanded="true" aria-selected="true" data-tag-type="ustensils">
-                    <div>
-                        <span>Ustensiles</span>
-                        <input type="text" placeholder="Recherchez un ustensile"/>
-                    </div>
-                    <i class="fa fa-solid fa-chevron-down"></i>
-                </button>
+                <!-- Ajout dynamique JS -->
             </div>
+
         </section>
 
         <section id="cards-container">
-        <!-- Card Recette / A AJOUTER EN JS ULTERIEUREMENT -->
-
-        <!-- 
-        <article class="card" tabindex="0">
-            <a>
-                <div class="card-img">
-                    <img src="assets/card-test.jpg" alt="test card image">
-                </div>
-                <div class="card-body">
-                    <div class="card-header">
-                        <h2 class="card-title">Limonade de Coco</h2>
-                        <span class="card-time">
-                            <img src="assets/clock.svg" alt="test card clock">
-                            <p>10 min</p>
-                        </span>
-                    </div>
-                    <div class="card-main">
-                        <ul class="card-ingredientsList">
-                            <li class="card-ingredient">
-                                <p>Lait de coco: </p><span>40ml</span>
-                            </li>
-                            <li class="card-ingredient">
-                                <p>Jus de citron: </p><span>2</span>
-                            </li>
-                            <li class="card-ingredient">
-                                <p>Crème de coco: </p></span>2 cuillères à soupe</span>
-                            </li>
-                            <li class="card-ingredient">
-                                <p>Sucre: </p></span>30 grammes</span>
-                            </li>
-                        </ul>
-                        <p class="card-description">
-                            Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée
-                        </p>
-                    </div>
-                </div>
-            </a>
-        </article>
-        -->
-    
+            <!-- Card Recette / A AJOUTER EN JS ULTERIEUREMENT -->
         </section>
         
 
     </main>
 
-    <script src="scripts/factories/recipeFactory.js"></script>
     <script src="scripts/index.js" type="module"></script>
+    <script src="scripts/factories/recipeFactory.js"></script>
+
     
 </body>
 </html>

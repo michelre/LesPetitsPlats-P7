@@ -64,10 +64,23 @@ main {
 .tags {
     display: flex;
     align-items: center;
-    padding: 5px 10px;
-    border-radius: 5px;
     list-style: none;
+    margin-top: 2%;
+    margin-bottom: 2%;
     /*color: white;*/
+}
+
+.tags li {
+    color: white;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    border-radius: 5px;
+    width: auto;
+    padding: 15px 30px 15px 15px;
+    margin-right: 10px;
 }
 
 #listboxs {
@@ -82,7 +95,7 @@ main {
     align-items: center;
     padding: 20px 15px;
     border: 0;
-    border-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
     font-weight: bold;
     margin-right: 15px;
     min-width: 170px;
@@ -90,30 +103,47 @@ main {
     color: white;
 }
 
+/*
 .tri-ingredients {
     overflow: hidden;
     transition: all 0.5s ease-in-out;
     width: 170px;
 }
 
-/* Largeur listbox une fois ouverte */
+/* Largeur listbox une fois ouverte 
 .tri-ingredients.ouvert {
     width: 400px;
 }
+*/
 
-#listboxs button[data-tag-type="ingredients"], .tag[data-tag-type="ingredients"] {
+.tri-ingredients button {
     background-color: #3282F7;
 }
+.tri-ingredients .listbox-options {
+    background-color: #3282F7;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
 
-#listboxs button[data-tag-type="appliance"], .tag[data-tag-type="appliance"] {
+.tri-appareils button {
     background-color: #68D9A4;
 }
-
-#listboxs button[data-tag-type="ustensils"], .tag[data-tag-type="ustensils"] {
-    background-color: #ED6454;
+.tri-appareils .listbox-options {
+    background-color: #68D9A4;
+    color: white;
+    font-family: 'Lato', sans-serif;
 }
 
-#listboxs button input {
+.tri-ustensiles button {
+    background-color: #ED6454;
+}
+.tri-ustensiles .listbox-options {
+    background-color: #ED6454;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+.listbox-input {
     display: none;
     width: 50%;
     color: white;
@@ -126,6 +156,42 @@ main {
     font-size: 1em;
     font-weight: 700;
 }
+
+.listbox-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 170px;
+
+    display: none;
+}
+
+.listbox-options:active {
+    height: auto !important;
+    max-height: 450px;
+
+}
+
+.tri-ingredients ul, .tri-appareils ul, .tri-ustensiles ul {
+    padding: 0;
+    list-style: none;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* CARD RECETTE */
@@ -251,14 +317,5 @@ main {
     -webkit-box-orient: vertical;
 }
 
-.tri-ingredients ul, .tri-appareils ul, .tri-ustensiles ul {
-    padding: 0;
-    list-style: none;
-    height: 200px;
-    overflow: scroll;
-}
-
-
-/* TEST COMPORTEMENT LISTBOX */
 
 
