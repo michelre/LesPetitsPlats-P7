@@ -103,19 +103,6 @@ main {
     color: white;
 }
 
-/*
-.tri-ingredients {
-    overflow: hidden;
-    transition: all 0.5s ease-in-out;
-    width: 170px;
-}
-
-/* Largeur listbox une fois ouverte 
-.tri-ingredients.ouvert {
-    width: 400px;
-}
-*/
-
 .tri-ingredients button {
     background-color: #3282F7;
 }
@@ -157,12 +144,19 @@ main {
     font-weight: 700;
 }
 
+.fa-chevron-down {
+    transition: transform .5s linear;
+}
+
+.fa-chevron-down.opened {
+    transform: rotate(180deg);
+}
+
 .listbox-options {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     width: 170px;
-
     display: none;
 }
 

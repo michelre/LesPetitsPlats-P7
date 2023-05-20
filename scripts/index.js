@@ -42,10 +42,10 @@ function displayIngredientsSelect() {
     const ingredients = recipes
         .map(recipe =>
             recipe.ingredients
-                .map(ingredient => ingredient.ingredient)
+                .map(ingredient => ingredient.ingredient.toLowerCase())
         ).flat()
     const select = new Select(
-        ingredients,
+        Array.from(new Set(ingredients)),
         'ingredient',
         'Ingrédient',
         'Recherchez vos ingrédients',
@@ -70,9 +70,9 @@ function displayIngredientsSelect() {
 
 // Listbox : Récupération et création de la liste d'appareils
 function displayAppliancesSelect() {
-    const appliances = recipes.map(recipe => recipe.appliance)
+    const appliances = recipes.map(recipe => recipe.appliance.toLowerCase())
     const select = new Select(
-        appliances,
+        Array.from(new Set(appliances)),
         'appareil',
         'Appareils',
         'Recherchez vos appareils',
@@ -98,10 +98,10 @@ function displayAppliancesSelect() {
 // Listbox : Récupération et création de la liste d'ustensiles 
 function displayUstensilsSelect() {
     const ustensils = recipes
-        .map(recipe => recipe.ustensils)
+        .map(recipe => recipe.ustensils.map(ustensil => ustensil.toLowerCase()))
         .flat()
     const select = new Select(
-        ustensils,
+        Array.from(new Set(ustensils)),
         'ustensil',
         'Ustensiles',
         'Recherchez vos ustensiles',
@@ -132,32 +132,3 @@ function displayUstensilsSelect() {
 *   - Au click sur un élément de la liste remonter l'information de l'élément cliqué (on verra ça ensemble, c'est le plus chiant)
 *  */
 
-
-/*
-// TEST - ANIMATION AU CLIC LISTBOXS
-
-// Récupère l'élément du bouton
-var bouton = document.querySelector('.tri-ingredients button');
-
-// Ajoute un écouteur d'événement pour détecter le clic sur le bouton
-bouton.addEventListener('click', function () {
-
-// Récupère l'élément de la div parente du bouton
-    var divParente = bouton.parentNode;
-
-// Ajoute une classe à la div parente pour agrandir sa largeur et afficher l'input de recherche
-    divParente.classList.toggle('ouvert');
-
-});
-*/
-
-/*
-// Récupère l'élément du bouton
-const optionsBtn = document.querySelector('.listbox-button');
-const ulElement = document.querySelector('.listbox-options');
-
-// Ajoute un écouteur d'événement pour détecter le clic sur le bouton
-optionsBtn.addEventListener('click', () => {
-    ulElement.style.overflow = "visible";
-});
-*/
