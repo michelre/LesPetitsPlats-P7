@@ -15,7 +15,6 @@ async function getRecipes() {
 }
 
 async function init() {
-    /* REMI: On peut stocker les recettes dans la variable globale prévue à cet effet */
     recipes = await getRecipes();
     displayRecipes();
     displayIngredientsSelect()

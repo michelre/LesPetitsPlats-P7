@@ -88,6 +88,10 @@ main {
     gap: 20px;
 }
 
+.listbox-div {
+
+}
+
 #listboxs button {
     position: relative;
     display: flex;
@@ -98,18 +102,20 @@ main {
     border-radius: 5px 5px 0px 0px;
     font-weight: bold;
     margin-right: 15px;
-    min-width: 170px;
-    max-width: max-content;
+    /*min-width: 170px;
+    max-width: max-content;*/
     color: white;
 }
 
 .tri-ingredients button {
     background-color: #3282F7;
+    width: 13vw;
 }
 .tri-ingredients .listbox-options {
     background-color: #3282F7;
     color: white;
     font-family: 'Lato', sans-serif;
+    width: 13vw;
 }
 
 .tri-appareils button {
@@ -132,7 +138,7 @@ main {
 
 .listbox-input {
     display: none;
-    width: 50%;
+    /*width: 18vw;*/
     color: white;
     border: 0;
     background-color: transparent;
@@ -152,20 +158,25 @@ main {
     transform: rotate(180deg);
 }
 
+
 .listbox-options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 170px;
     display: none;
+    padding: 0;
+    list-style: none;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
 }
 
-.listbox-options:active {
-    height: auto !important;
-    max-height: 450px;
-
+.listbox-options.active {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
 }
 
+
+
+/*
 .tri-ingredients ul, .tri-appareils ul, .tri-ustensiles ul {
     padding: 0;
     list-style: none;
@@ -174,6 +185,7 @@ main {
     overflow-x: hidden;
     scrollbar-width: thin;
 }
+*/
 
 
 

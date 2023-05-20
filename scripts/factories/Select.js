@@ -33,6 +33,7 @@ class Select {
         const input = document.createElement('input')
         const spanName = document.createElement('span')
         spanName.innerText = this.name
+        divSelect.classList.add('listbox-div')
         input.classList.add('listbox-input')
         input.setAttribute('placeholder', this.placeholder)
         button.classList.add('listbox-button')
@@ -58,11 +59,14 @@ class Select {
                 input.style.display = "none";
                 spanName.style.display = 'block'
                 chevron.classList.remove('opened')
+                //divSelect.style.width = '200%'; // Agrandissement de la div
             } else {
-                elements.style.display = "block";
+                elements.style.display = "grid";
                 input.style.display = "block";
                 spanName.style.display = 'none'
                 chevron.classList.add('opened')
+                //divSelect.style.width = '100%'; // Retour à la taille d'origine de la div
+                elements.classList.add('active')
             }
             this.isOpened = !this.isOpened
         })
