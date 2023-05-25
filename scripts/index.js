@@ -5,6 +5,7 @@ let recipes = []
 let selectedIngredients = []
 let selectedAppliances = []
 let selectedUstensiles = []
+const selects = []
 
 const tags = document.querySelector('.tags')
 
@@ -56,7 +57,7 @@ function displayIngredientsSelect() {
 
             /* TEST AJOUT ICONE CROIX FEMETURE TAG - !!!!!!!!  NON FONCTIONNEL !!!!!!!!! */
             const listElementClose = document.createElement('i')
-            listElementClose.classList.add("fa-regular", "fa-circle-xmark")
+            listElementClose.classList.add("fa", "fa-times-circle")
             listElement.appendChild(listElementClose)
 
             tags.appendChild(listElement)
@@ -67,8 +68,18 @@ function displayIngredientsSelect() {
                     .filter(selectedIngredient => selectedIngredient !== ingredient)
                 listElement.remove()
             })
+        },
+        () => {
+            if(select.isOpened){
+                selects.forEach(select => {
+                    if(select.type !== 'ingredient'){
+                        select.close()
+                    }
+                })
+            }
         }
     )
+    selects.push(select)
     const triIngredients = document.querySelector('.tri-ingredients')
     triIngredients.appendChild(select.render())
 }
@@ -94,8 +105,18 @@ function displayAppliancesSelect() {
                     .filter(selectedAppliance => selectedAppliance !== appliance)
                 listElement.remove()
             })
+        },
+                () => {
+            if(select.isOpened){
+                selects.forEach(select => {
+                    if(select.type !== 'appareil'){
+                        select.close()
+                    }
+                })
+            }
         }
     )
+    selects.push(select)
     const triIngredients = document.querySelector('.tri-appareils')
     triIngredients.appendChild(select.render())
 }
@@ -123,8 +144,18 @@ function displayUstensilsSelect() {
                     .filter(selectedUstensil => selectedUstensil !== ustensil)
                 listElement.remove()
             })
+        },
+() => {
+            if(select.isOpened){
+                selects.forEach(select => {
+                    if(select.type !== 'ustensil'){
+                        select.close()
+                    }
+                })
+            }
         }
     )
+    selects.push(select)
     const triIngredients = document.querySelector('.tri-ustensiles')
     triIngredients.appendChild(select.render())
 }
@@ -147,18 +178,29 @@ function performSearch() {
   const searchTerm = searchInput.toLowerCase();
 
   // Étape 3 : Parcourir les recettes
-  var filteredRecipes = [];
-  for (var i = 0; i < recipes.length; i++) {
-    var recipe = recipes[i];
+  let filteredRecipes = [];
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
 
     // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
-    var recipeTitle = recipe.name.toLowerCase();
-    var recipeDescription = recipe.description.toLowerCase();
+    const recipeTitle = recipe.name.toLowerCase();
+    const recipeDescription = recipe.description.toLowerCase();
+    // Si le mot clé est inclus dans les ingrédients, ajouter la recette dans filteredRecipes
     if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
       // Étape 5 : Ajouter la recette à la liste de résultats
       filteredRecipes.push(recipe);
     }
   }
+
+  // Version 2 de l'algorithme à mettre dans une branche pour plus tard
+  /*filteredRecipes = recipes.filter(recipe => {
+      const recipeTitle = recipe.name.toLowerCase();
+    const recipeDescription = recipe.description.toLowerCase();
+    if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
+      // Étape 5 : Ajouter la recette à la liste de résultats
+      filteredRecipes.push(recipe);
+    }
+  })*/
 
   // Étape 6 : Afficher les recettes correspondantes
   const recipeSection = document.getElementById('cards-container');
