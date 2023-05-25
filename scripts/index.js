@@ -15,7 +15,6 @@ async function getRecipes() {
 }
 
 async function init() {
-    /* REMI: On peut stocker les recettes dans la variable globale prévue à cet effet */
     recipes = await getRecipes();
     displayRecipes();
     displayIngredientsSelect()
@@ -54,6 +53,12 @@ function displayIngredientsSelect() {
             const listElement = document.createElement('li')
             listElement.innerText = ingredient
             listElement.style.background = "#3282F7"
+
+            /* TEST AJOUT ICONE CROIX FEMETURE TAG - !!!!!!!!  NON FONCTIONNEL !!!!!!!!! */
+            const listElementClose = document.createElement('i')
+            listElementClose.classList.add("fa-regular", "fa-circle-xmark")
+            listElement.appendChild(listElementClose)
+
             tags.appendChild(listElement)
             console.log(selectedIngredients)
 
@@ -111,7 +116,7 @@ function displayUstensilsSelect() {
             listElement.innerText = ustensil
             listElement.style.background = "#ED6454"
             tags.appendChild(listElement)
-            console.log(selectedUstensiles)
+            console.log(selectedUstensiles) 
 
             listElement.addEventListener('click', () => {
                 selectedUstensiles = selectedUstensiles
@@ -124,40 +129,47 @@ function displayUstensilsSelect() {
     triIngredients.appendChild(select.render())
 }
 
-/* REMI: Conseils:
-* 1. Faire un composant "Select" qui prend en paramètre les éléments (ingrédients / ustensils / appareils) à afficher
-* 2. Afficher les ingrédients / ustensils et appareils dans chacun des selects
-* 3. Rassembler les évènements dans une méthode propre à ce composant
-*   - Comme ci-dessous, au click sur le composant, l'ouvrir ou le fermer pour afficher ou cacher le contenu
-*   - Au click sur un élément de la liste remonter l'information de l'élément cliqué (on verra ça ensemble, c'est le plus chiant)
-*  */
 
 
-/*
-// TEST - ANIMATION AU CLIC LISTBOXS
 
-// Récupère l'élément du bouton
-var bouton = document.querySelector('.tri-ingredients button');
+/* TEST ALGORITHME DE RECHERCHE INPUT PRINCIPALE : TITRE + DESCRIPTION RECETTE */
 
-// Ajoute un écouteur d'événement pour détecter le clic sur le bouton
-bouton.addEventListener('click', function () {
+// Sélection de l'élément input et ajout d'un gestionnaire d'événement de saisie
+const searchBarInput = document.getElementById('searchBar-input');
+searchBarInput.addEventListener('input', performSearch);
 
-// Récupère l'élément de la div parente du bouton
-    var divParente = bouton.parentNode;
+// Fonction de recherche
+function performSearch() {
+  // Étape 1 : Récupérer l'entrée de recherche
+  const searchInput = searchBarInput.value;
 
-// Ajoute une classe à la div parente pour agrandir sa largeur et afficher l'input de recherche
-    divParente.classList.toggle('ouvert');
+  // Étape 2 : Convertir l'entrée de recherche en minuscules
+  const searchTerm = searchInput.toLowerCase();
 
-});
-*/
+  // Étape 3 : Parcourir les recettes
+  var filteredRecipes = [];
+  for (var i = 0; i < recipes.length; i++) {
+    var recipe = recipes[i];
 
-/*
-// Récupère l'élément du bouton
-const optionsBtn = document.querySelector('.listbox-button');
-const ulElement = document.querySelector('.listbox-options');
+    // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
+    var recipeTitle = recipe.name.toLowerCase();
+    var recipeDescription = recipe.description.toLowerCase();
+    if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
+      // Étape 5 : Ajouter la recette à la liste de résultats
+      filteredRecipes.push(recipe);
+    }
+  }
 
-// Ajoute un écouteur d'événement pour détecter le clic sur le bouton
-optionsBtn.addEventListener('click', () => {
-    ulElement.style.overflow = "visible";
-});
-*/
+  // Étape 6 : Afficher les recettes correspondantes
+  const recipeSection = document.getElementById('cards-container');
+  recipeSection.innerHTML = '';
+
+  filteredRecipes.forEach((recipe) => {
+    const recipeTemplate = recipeFactory(recipe);
+    const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
+    recipeSection.appendChild(recipeCardDOM);
+  });
+}
+
+
+
