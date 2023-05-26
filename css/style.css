@@ -81,11 +81,15 @@ main {
     width: auto;
     padding: 15px 30px 15px 15px;
     margin-right: 10px;
+    display: flex;
 }
 
 .tags i {
     color: red;
     font-size: 18px;
+    display: block;
+    width: 18px;
+    height: 18px;
 }
 
 #listboxs {
@@ -94,7 +98,7 @@ main {
 }
 
 .listbox-div {
-
+    width: 100%;
 }
 
 #listboxs button {
@@ -110,6 +114,7 @@ main {
     /*min-width: 170px;
     max-width: max-content;*/
     color: white;
+    width: 100%;
 }
 
 .tri-ingredients button {
@@ -120,7 +125,7 @@ main {
     background-color: #3282F7;
     color: white;
     font-family: 'Lato', sans-serif;
-    width: 13vw;
+    width: 100%;
 }
 
 .tri-appareils button {
@@ -168,15 +173,30 @@ main {
     display: none;
     padding: 0;
     list-style: none;
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
+    flex-wrap: wrap;
+    padding-left: 20px;
 }
 
 .listbox-options.active {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    /*grid-template-columns: repeat(3, 1fr);
+    gap: 5px;*/
+}
+
+.listbox-options li {
+    width: 33%;
+    padding: 5px 0;
+}
+
+.listbox-input::placeholder {
+    color: white;
+}
+
+.listbox-button > div, input {
+    width: 100%
 }
 
 
@@ -328,5 +348,10 @@ main {
     -webkit-box-orient: vertical;
 }
 
+.fa-chevron-down {
+    transition: transform .5s linear;
+}
 
-
+.fa-chevron-down.opened {
+    transform: rotate(180deg);
+}

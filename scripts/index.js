@@ -5,6 +5,7 @@ let recipes = []
 let selectedIngredients = []
 let selectedAppliances = []
 let selectedUstensiles = []
+const selects = []
 
 const tags = document.querySelector('.tags')
 
@@ -53,22 +54,30 @@ function displayIngredientsSelect() {
             const listElement = document.createElement('li')
             listElement.innerText = ingredient
             listElement.style.background = "#3282F7"
-
-            /* TEST AJOUT ICONE CROIX FEMETURE TAG - !!!!!!!!  NON FONCTIONNEL !!!!!!!!! */
             const listElementClose = document.createElement('i')
-            listElementClose.classList.add("fa-regular", "fa-circle-xmark")
+            listElementClose.classList.add("fa", "fa-times-circle")
             listElement.appendChild(listElementClose)
-
             tags.appendChild(listElement)
-            console.log(selectedIngredients)
 
+            // Evènement filtrant les options de la liste déroulante en fonction de la saisie de l'input
             listElement.addEventListener('click', () => {
                 selectedIngredients = selectedIngredients
                     .filter(selectedIngredient => selectedIngredient !== ingredient)
                 listElement.remove()
             })
+        },
+        // Gestion de l'ouverture Listbox, faisant en sorte de ne permettre l'affichage que d'une seule liste déroulante à la fois
+        () => {
+            if(select.isOpened){
+                selects.forEach(select => {
+                    if(select.type !== 'ingredient'){
+                        select.close()
+                    }
+                })
+            }
         }
     )
+    selects.push(select)
     const triIngredients = document.querySelector('.tri-ingredients')
     triIngredients.appendChild(select.render())
 }
@@ -86,16 +95,30 @@ function displayAppliancesSelect() {
             const listElement = document.createElement('li')
             listElement.innerText = appliance
             listElement.style.background = "#68D9A4"
+            const listElementClose = document.createElement('i')
+            listElementClose.classList.add("fa", "fa-times-circle")
+            listElement.appendChild(listElementClose)
             tags.appendChild(listElement)
-            console.log(selectedAppliances)
 
+            // Evènement filtrant les options de la liste déroulante en fonction de la saisie de l'input
             listElement.addEventListener('click', () => {
                 selectedAppliances = selectedAppliances
                     .filter(selectedAppliance => selectedAppliance !== appliance)
                 listElement.remove()
             })
+        },
+        // Gestion de l'ouverture Listbox, faisant en sorte de ne permettre l'affichage que d'une seule liste déroulante à la fois
+        () => {
+            if(select.isOpened){
+                selects.forEach(select => {
+                    if(select.type !== 'appareil'){
+                        select.close()
+                    }
+                })
+            }
         }
     )
+    selects.push(select)
     const triIngredients = document.querySelector('.tri-appareils')
     triIngredients.appendChild(select.render())
 }
@@ -115,24 +138,36 @@ function displayUstensilsSelect() {
             const listElement = document.createElement('li')
             listElement.innerText = ustensil
             listElement.style.background = "#ED6454"
+            const listElementClose = document.createElement('i')
+            listElementClose.classList.add("fa", "fa-times-circle")
+            listElement.appendChild(listElementClose)
             tags.appendChild(listElement)
-            console.log(selectedUstensiles) 
 
+            // Evènement filtrant les options de la liste déroulante en fonction de la saisie de l'input
             listElement.addEventListener('click', () => {
                 selectedUstensiles = selectedUstensiles
                     .filter(selectedUstensil => selectedUstensil !== ustensil)
                 listElement.remove()
             })
+        },
+        // Gestion de l'ouverture Listbox, faisant en sorte de ne permettre l'affichage que d'une seule liste déroulante à la fois
+        () => {
+            if(select.isOpened){
+                selects.forEach(select => {
+                    if(select.type !== 'ustensil'){
+                        select.close()
+                    }
+                })
+            }
         }
     )
+    selects.push(select)
     const triIngredients = document.querySelector('.tri-ustensiles')
     triIngredients.appendChild(select.render())
 }
 
 
-
-
-/* TEST ALGORITHME DE RECHERCHE INPUT PRINCIPALE : TITRE + DESCRIPTION RECETTE */
+/* Algorithme de filtrage des recettes (boucle for) - Input principal - Titre et description */
 
 // Sélection de l'élément input et ajout d'un gestionnaire d'événement de saisie
 const searchBarInput = document.getElementById('searchBar-input');
@@ -147,13 +182,14 @@ function performSearch() {
   const searchTerm = searchInput.toLowerCase();
 
   // Étape 3 : Parcourir les recettes
-  var filteredRecipes = [];
-  for (var i = 0; i < recipes.length; i++) {
-    var recipe = recipes[i];
+  let filteredRecipes = [];
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
 
     // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
-    var recipeTitle = recipe.name.toLowerCase();
-    var recipeDescription = recipe.description.toLowerCase();
+    const recipeTitle = recipe.name.toLowerCase();
+    const recipeDescription = recipe.description.toLowerCase();
+    // Si le mot clé est inclus dans les ingrédients, ajouter la recette dans filteredRecipes
     if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
       // Étape 5 : Ajouter la recette à la liste de résultats
       filteredRecipes.push(recipe);
@@ -173,3 +209,43 @@ function performSearch() {
 
 
 
+
+
+/* Version 2 de l'algorithme de filtrage des recettes (FILTER) - Input principal - Titre et description */
+/* A ajouter ultérieurement dans une brance séparée afin de comparer les deux méthodes 
+
+// Sélection de l'élément input et ajout d'un gestionnaire d'événement de saisie
+const searchBarInput = document.getElementById('searchBar-input');
+searchBarInput.addEventListener('input', performSearch);
+
+// Fonction de recherche
+function performSearch() {
+  // Étape 1 : Récupérer l'entrée de recherche
+  const searchInput = searchBarInput.value;
+
+  // Étape 2 : Convertir l'entrée de recherche en minuscules
+  const searchTerm = searchInput.toLowerCase();
+
+    // Étape 3 : Filtrage des recettes
+    let filteredRecipes = [];
+    filteredRecipes = recipes.filter(recipe => {
+        const recipeTitle = recipe.name.toLowerCase();
+        const recipeDescription = recipe.description.toLowerCase();
+            // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
+            if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
+            // Étape 5 : Ajouter la recette à la liste de résultats
+            filteredRecipes.push(recipe);
+        }
+
+        // Étape 6 : Afficher les recettes correspondantes
+        const recipeSection = document.getElementById('cards-container');
+        recipeSection.innerHTML = '';
+
+        filteredRecipes.forEach((recipe) => {
+            const recipeTemplate = recipeFactory(recipe);
+            const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
+            recipeSection.appendChild(recipeCardDOM);
+        });
+    }
+)}
+*/
