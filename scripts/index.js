@@ -58,19 +58,21 @@ function displayIngredientsSelect() {
             listElementClose.classList.add("fa", "fa-times-circle")
             listElement.appendChild(listElementClose)
             tags.appendChild(listElement)
+            search()
 
             // Evènement filtrant les options de la liste déroulante en fonction de la saisie de l'input
             listElement.addEventListener('click', () => {
                 selectedIngredients = selectedIngredients
                     .filter(selectedIngredient => selectedIngredient !== ingredient)
                 listElement.remove()
+                search()
             })
         },
         // Gestion de l'ouverture Listbox, faisant en sorte de ne permettre l'affichage que d'une seule liste déroulante à la fois
         () => {
-            if(select.isOpened){
+            if (select.isOpened) {
                 selects.forEach(select => {
-                    if(select.type !== 'ingredient'){
+                    if (select.type !== 'ingredient') {
                         select.close()
                     }
                 })
@@ -99,19 +101,21 @@ function displayAppliancesSelect() {
             listElementClose.classList.add("fa", "fa-times-circle")
             listElement.appendChild(listElementClose)
             tags.appendChild(listElement)
+            search()
 
             // Evènement filtrant les options de la liste déroulante en fonction de la saisie de l'input
             listElement.addEventListener('click', () => {
                 selectedAppliances = selectedAppliances
                     .filter(selectedAppliance => selectedAppliance !== appliance)
                 listElement.remove()
+                search()
             })
         },
         // Gestion de l'ouverture Listbox, faisant en sorte de ne permettre l'affichage que d'une seule liste déroulante à la fois
         () => {
-            if(select.isOpened){
+            if (select.isOpened) {
                 selects.forEach(select => {
-                    if(select.type !== 'appareil'){
+                    if (select.type !== 'appareil') {
                         select.close()
                     }
                 })
@@ -142,19 +146,21 @@ function displayUstensilsSelect() {
             listElementClose.classList.add("fa", "fa-times-circle")
             listElement.appendChild(listElementClose)
             tags.appendChild(listElement)
+            search()
 
             // Evènement filtrant les options de la liste déroulante en fonction de la saisie de l'input
             listElement.addEventListener('click', () => {
                 selectedUstensiles = selectedUstensiles
                     .filter(selectedUstensil => selectedUstensil !== ustensil)
                 listElement.remove()
+                search()
             })
         },
         // Gestion de l'ouverture Listbox, faisant en sorte de ne permettre l'affichage que d'une seule liste déroulante à la fois
         () => {
-            if(select.isOpened){
+            if (select.isOpened) {
                 selects.forEach(select => {
-                    if(select.type !== 'ustensil'){
+                    if (select.type !== 'ustensil') {
                         select.close()
                     }
                 })
@@ -175,41 +181,103 @@ searchBarInput.addEventListener('input', performSearch);
 
 // Fonction de recherche
 function performSearch() {
-  // Étape 1 : Récupérer l'entrée de recherche
-  const searchInput = searchBarInput.value;
+    // Étape 1 : Récupérer l'entrée de recherche
+    const searchInput = searchBarInput.value;
 
-  // Étape 2 : Convertir l'entrée de recherche en minuscules
-  const searchTerm = searchInput.toLowerCase();
+    // Étape 2 : Convertir l'entrée de recherche en minuscules
+    const searchTerm = searchInput.toLowerCase();
 
-  // Étape 3 : Parcourir les recettes
-  let filteredRecipes = [];
-  for (let i = 0; i < recipes.length; i++) {
-    const recipe = recipes[i];
+    // Étape 3 : Parcourir les recettes
+    let filteredRecipes = [];
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
 
-    // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
+        // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
+        const recipeTitle = recipe.name.toLowerCase();
+        const recipeDescription = recipe.description.toLowerCase();
+        // Si le mot clé est inclus dans les ingrédients, ajouter la recette dans filteredRecipes
+        if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
+            // Étape 5 : Ajouter la recette à la liste de résultats
+            filteredRecipes.push(recipe);
+        }
+    }
+
+    // Étape 6 : Afficher les recettes correspondantes
+    const recipeSection = document.getElementById('cards-container');
+    recipeSection.innerHTML = '';
+
+    filteredRecipes.forEach((recipe) => {
+        const recipeTemplate = recipeFactory(recipe);
+        const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
+        recipeSection.appendChild(recipeCardDOM);
+    });
+}
+
+function searchByInput(recipe) {
+    // Étape 1 : Récupérer l'entrée de recherche
+    const searchInput = searchBarInput.value;
+
+    // Étape 2 : Convertir l'entrée de recherche en minuscules
+    const searchTerm = searchInput.toLowerCase();
+
     const recipeTitle = recipe.name.toLowerCase();
     const recipeDescription = recipe.description.toLowerCase();
     // Si le mot clé est inclus dans les ingrédients, ajouter la recette dans filteredRecipes
-    if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
-      // Étape 5 : Ajouter la recette à la liste de résultats
-      filteredRecipes.push(recipe);
-    }
-  }
-
-  // Étape 6 : Afficher les recettes correspondantes
-  const recipeSection = document.getElementById('cards-container');
-  recipeSection.innerHTML = '';
-
-  filteredRecipes.forEach((recipe) => {
-    const recipeTemplate = recipeFactory(recipe);
-    const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
-    recipeSection.appendChild(recipeCardDOM);
-  });
+    return recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)
 }
 
+function searchByIngredients(recipe) {
+    return recipe.ingredients
+        .filter(ingredient => selectedIngredients.includes(ingredient.ingredient.toLowerCase()))
+        .length === selectedIngredients.length // Il faut que tous les ingrédients sélectionnés soient dans la recette
+}
 
+function searchByAppliances(recipe) {
+    return selectedAppliances
+        .filter(appliance => appliance === recipe.appliance.toLowerCase())
+        .length === selectedAppliances.length
+}
 
+function searchByUstensils(recipe) {
+    return recipe.ustensils
+        .filter(ustensil => selectedUstensiles.includes(ustensil.toLowerCase()))
+        .length === selectedUstensiles.length
+}
 
+function search() {
+    const filteredRecipes = recipes.filter((recipe) => {
+        return searchByIngredients(recipe) &&
+            searchByAppliances(recipe) &&
+            searchByUstensils(recipe) &&
+            searchByInput(recipe)
+    })
+
+    /*
+    TODO: A mettre dans une seconde branche
+
+    let filteredRecipes = []
+
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i]
+        if (searchByIngredients(recipe) &&
+            searchByAppliances(recipe) &&
+            searchByUstensils(recipe) &&
+            searchByInput(recipe)
+        ) {
+            filteredRecipes.push(recipe)
+        }
+    }*/
+
+    // Étape 6 : Afficher les recettes correspondantes
+    const recipeSection = document.getElementById('cards-container');
+    recipeSection.innerHTML = '';
+
+    filteredRecipes.forEach((recipe) => {
+        const recipeTemplate = recipeFactory(recipe);
+        const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
+        recipeSection.appendChild(recipeCardDOM);
+    });
+}
 
 /* Version 2 de l'algorithme de filtrage des recettes (FILTER) - Input principal - Titre et description */
 /* A ajouter ultérieurement dans une brance séparée afin de comparer les deux méthodes 
