@@ -27,6 +27,7 @@ class Select {
         return elements
     }
 
+    // Gestion de la fermeture de la liste d'options déroulante des listboxs
     close() {
         this.elements.style.display = "none";
         this.input.style.display = "none";
@@ -35,40 +36,45 @@ class Select {
         this.isOpened = false
     }
 
+    // Gestion de l'ouverture de la liste d'options déroulante des listboxs
     open() {
         this.elements.style.display = "flex";
         this.input.style.display = "block";
         this.spanName.style.display = 'none'
         this.chevron.classList.add('opened')
-        //divSelect.style.width = '100%'; // Retour à la taille d'origine de la div
         this.elements.classList.add('active')
         this.isOpened = true
     }
 
     // Création du DOM Listbox
     render() {
+        // Conteneur principal Listbox
         const divSelect = document.createElement('div')
-        const button = document.createElement('button')
-        this.input = document.createElement('input')
-        this.spanName = document.createElement('span')
-        this.spanName.innerText = this.name
         divSelect.classList.add('listbox-div')
-        this.input.classList.add('listbox-input')
-        this.input.setAttribute('placeholder', this.placeholder)
+        // Bouton Listbox
+        const button = document.createElement('button')
         button.classList.add('listbox-button')
         button.setAttribute('aria-haspopup', 'listbox')
         button.setAttribute('aria-expanded', 'true')
         button.setAttribute('aria-selected', 'true')
-
+        // Span affichant de nom de la Listbox
+        this.spanName = document.createElement('span')
+        this.spanName.innerText = this.name
+        // Input de recherche 
+        this.input = document.createElement('input')
+        this.input.classList.add('listbox-input')
+        this.input.setAttribute('placeholder', this.placeholder)
+        // Div contenant le span (ingrédient/appareil/ustensile) et l'input de recherche
         const divButton = document.createElement('div')
         divButton.appendChild(this.spanName)
         divButton.appendChild(this.input)
         button.appendChild(divButton)
-
+        // Icone d'ouverture/fermeture Listbox
         this.chevron = document.createElement('i')
         this.chevron.classList.add("fa", "fa-solid", "fa-chevron-down")
         button.appendChild(this.chevron)
 
+            
         this.elements = this.createListOptions()
 
         // Fonction gérant le comportement d'ouverture et de fermeture de la liste déroulante d'options
