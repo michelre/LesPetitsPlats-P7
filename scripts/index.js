@@ -24,7 +24,6 @@ async function init() {
 };
 init();
 
-
 // Affichage des Cards recette via la factory recipeFactory
 function displayRecipes() {
     const recipeSection = document.getElementById('cards-container');
@@ -174,7 +173,6 @@ function displayUstensilsSelect() {
 
 
 /* Algorithme de filtrage des recettes (boucle for) - Input principal - Titre et description */
-
 // Sélection de l'élément input et ajout d'un gestionnaire d'événement de saisie
 const searchBarInput = document.getElementById('searchBar-input');
 searchBarInput.addEventListener('input', performSearch);
@@ -205,7 +203,6 @@ function performSearch() {
     // Étape 6 : Afficher les recettes correspondantes
     const recipeSection = document.getElementById('cards-container');
     recipeSection.innerHTML = '';
-
     filteredRecipes.forEach((recipe) => {
         const recipeTemplate = recipeFactory(recipe);
         const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
@@ -213,65 +210,67 @@ function performSearch() {
     });
 }
 
+
+// Fonction générique prenant une recette en paramètre et effectuant une recherche basée sur une entrée de recherche
 function searchByInput(recipe) {
-    // Étape 1 : Récupérer l'entrée de recherche
+    // Étape 1 : Récupérer l'entrée de recherche 
     const searchInput = searchBarInput.value;
 
     // Étape 2 : Convertir l'entrée de recherche en minuscules
     const searchTerm = searchInput.toLowerCase();
 
+    // Convertir le titre de la recette et la description de la recette en minuscules
     const recipeTitle = recipe.name.toLowerCase();
     const recipeDescription = recipe.description.toLowerCase();
-    // Si le mot clé est inclus dans les ingrédients, ajouter la recette dans filteredRecipes
+
+    // Si le mot clé est inclus dans le titre ou la description de la recette, retourner true
     return recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)
 }
 
+// Algorithme de recherche spécifique à l'input de la listbox Ingrédients
 function searchByIngredients(recipe) {
     return recipe.ingredients
+        // Filtrer les ingrédients de la recette en fonction des ingrédients sélectionnés
         .filter(ingredient => selectedIngredients.includes(ingredient.ingredient.toLowerCase()))
-        .length === selectedIngredients.length // Il faut que tous les ingrédients sélectionnés soient dans la recette
+        // Vérifier si le nombre d'ingrédients filtrés est égal au nombre total d'ingrédients sélectionnés
+        .length === selectedIngredients.length;
 }
 
+// Algorithme de recherche spécifique à l'input de la listbox Appareils
 function searchByAppliances(recipe) {
     return selectedAppliances
+        // Filtrer l'appareil contenu dans la recette en fonction de l'appareil sélectionné  
         .filter(appliance => appliance === recipe.appliance.toLowerCase())
-        .length === selectedAppliances.length
+        // Vérifier si le nombre d'appareils filtrés est égal au nombre total d'appareils sélectionnés
+        .length === selectedAppliances.length;
 }
 
+// Algorithme de recherche spécifique à l'input de la listbox Ustensiles
 function searchByUstensils(recipe) {
     return recipe.ustensils
+        // Filtrer les ustensiles sélectionnés en fonction des ustensiles de la recette 
         .filter(ustensil => selectedUstensiles.includes(ustensil.toLowerCase()))
-        .length === selectedUstensiles.length
+        // Vérifier si le nombre d'ustensiles filtrés est égal au nombre total d'ustensiles sélectionnés
+        .length === selectedUstensiles.length;
 }
 
+// Méthode 1 - FILTER : Fonction effectuant une recherche globale sur les recettes en fonction des critères de recherche
 function search() {
+    // Filtrer les recettes en utilisant les fonctions de recherche spécifiques
     const filteredRecipes = recipes.filter((recipe) => {
         return searchByIngredients(recipe) &&
             searchByAppliances(recipe) &&
             searchByUstensils(recipe) &&
-            searchByInput(recipe)
-    })
+            searchByInput(recipe);
+    });
 
-    /*
-    TODO: A mettre dans une seconde branche
-
-    let filteredRecipes = []
-
-    for (let i = 0; i < recipes.length; i++) {
-        const recipe = recipes[i]
-        if (searchByIngredients(recipe) &&
-            searchByAppliances(recipe) &&
-            searchByUstensils(recipe) &&
-            searchByInput(recipe)
-        ) {
-            filteredRecipes.push(recipe)
-        }
-    }*/
-
-    // Étape 6 : Afficher les recettes correspondantes
+    // Récupérer l'élément HTML représentant la section des cartes de recettes
     const recipeSection = document.getElementById('cards-container');
+
+    // Vider le contenu précédent de la section des cartes de recettes
     recipeSection.innerHTML = '';
 
+    // Pour chaque recette filtrée, générer une carte de recette et l'ajouter à la section des cartes de recettes
     filteredRecipes.forEach((recipe) => {
         const recipeTemplate = recipeFactory(recipe);
         const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
@@ -279,41 +278,44 @@ function search() {
     });
 }
 
-/* Version 2 de l'algorithme de filtrage des recettes (FILTER) - Input principal - Titre et description */
-/* A ajouter ultérieurement dans une brance séparée afin de comparer les deux méthodes 
-
-// Sélection de l'élément input et ajout d'un gestionnaire d'événement de saisie
-const searchBarInput = document.getElementById('searchBar-input');
-searchBarInput.addEventListener('input', performSearch);
-
-// Fonction de recherche
-function performSearch() {
-  // Étape 1 : Récupérer l'entrée de recherche
-  const searchInput = searchBarInput.value;
-
-  // Étape 2 : Convertir l'entrée de recherche en minuscules
-  const searchTerm = searchInput.toLowerCase();
-
-    // Étape 3 : Filtrage des recettes
+/*
+// Méthode 2 - BOUCLE FOR : Fonction effectuant une recherche globale sur les recettes en fonction des critères de recherche
+function search() {
     let filteredRecipes = [];
-    filteredRecipes = recipes.filter(recipe => {
-        const recipeTitle = recipe.name.toLowerCase();
-        const recipeDescription = recipe.description.toLowerCase();
-            // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
-            if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
-            // Étape 5 : Ajouter la recette à la liste de résultats
+    // Parcourir toutes les recettes
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
+
+        // Vérifier si la recette satisfait tous les critères de recherche
+        if (
+            searchByIngredients(recipe) &&
+            searchByAppliances(recipe) &&
+            searchByUstensils(recipe) &&
+            searchByInput(recipe)
+        ) {
+            // Ajouter la recette filtrée au tableau des recettes filtrées
             filteredRecipes.push(recipe);
         }
-
-        // Étape 6 : Afficher les recettes correspondantes
-        const recipeSection = document.getElementById('cards-container');
-        recipeSection.innerHTML = '';
-
-        filteredRecipes.forEach((recipe) => {
-            const recipeTemplate = recipeFactory(recipe);
-            const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
-            recipeSection.appendChild(recipeCardDOM);
-        });
     }
-)}
+
+    // Récupérer l'élément HTML représentant la section des cartes de recettes
+    const recipeSection = document.getElementById('cards-container');
+
+    // Vider le contenu précédent de la section des cartes de recettes
+    recipeSection.innerHTML = '';
+
+    // Pour chaque recette filtrée, générer une carte de recette et l'ajouter à la section des cartes de recettes
+    filteredRecipes.forEach((recipe) => {
+        const recipeTemplate = recipeFactory(recipe);
+        const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
+        recipeSection.appendChild(recipeCardDOM);
+    });
+}
+*/
+
+
+/*
+Conclusion des tests algorithmiques 
+Filter est plus lisible (on in crémente pas sur des boucles)
+Le for est plus rapide 
 */
