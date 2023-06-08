@@ -193,7 +193,7 @@ function displayUstensilsSelect() {
 /* Algorithme de filtrage des recettes (boucle for) - Input principal - Titre et description */
 // Sélection de l'élément input et ajout d'un gestionnaire d'événement de saisie
 const searchBarInput = document.getElementById('searchBar-input');
-searchBarInput.addEventListener('input', performSearch);
+searchBarInput.addEventListener('input', search);
 
 // Fonction de recherche
 function performSearch() {
@@ -240,9 +240,15 @@ function searchByInput(recipe) {
     // Convertir le titre de la recette et la description de la recette en minuscules
     const recipeTitle = recipe.name.toLowerCase();
     const recipeDescription = recipe.description.toLowerCase();
+    const recipeIngredients = recipe
+        .ingredients
+        .filter(({ingredient}) => ingredient.toLowerCase().includes(searchTerm))
+
 
     // Si le mot clé est inclus dans le titre ou la description de la recette, retourner true
-    return recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)
+    return recipeTitle.includes(searchTerm)
+        || recipeDescription.includes(searchTerm)
+        || recipeIngredients.length > 0
 }
 
 // Algorithme de recherche spécifique à l'input de la listbox Ingrédients
