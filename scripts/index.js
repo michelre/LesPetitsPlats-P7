@@ -257,15 +257,24 @@ function searchByUstensils(recipe) {
         .length === selectedUstensiles.length;
 }
 
-// Méthode 1 - FILTER : Fonction effectuant une recherche globale sur les recettes en fonction des critères de recherche
+// Méthode 2 - BOUCLE FOR : Fonction effectuant une recherche globale sur les recettes en fonction des critères de recherche
 function search() {
-    // Filtrer les recettes en utilisant les fonctions de recherche spécifiques
-    const filteredRecipes = recipes.filter((recipe) => {
-        return searchByIngredients(recipe) &&
+    let filteredRecipes = [];
+    // Parcourir toutes les recettes
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
+
+        // Vérifier si la recette satisfait tous les critères de recherche
+        if (
+            searchByIngredients(recipe) &&
             searchByAppliances(recipe) &&
             searchByUstensils(recipe) &&
-            searchByInput(recipe);
-    });
+            searchByInput(recipe)
+        ) {
+            // Ajouter la recette filtrée au tableau des recettes filtrées
+            filteredRecipes.push(recipe);
+        }
+    }
 
     selects[0].setData(getIngredientsFromRecipes(filteredRecipes))
     selects[1].setData(getAppliancesFromRecipes(filteredRecipes))
