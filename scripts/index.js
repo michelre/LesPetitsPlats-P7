@@ -36,18 +36,24 @@ function displayRecipes() {
     })
 }
 
-// Listbox : Récupération et création de la liste d'ingrédients 
-function displayIngredientsSelect() {
+function getIngredientsFromRecipes(recipes){
     const ingredients = recipes
         .map(recipe =>
             recipe.ingredients
                 .map(ingredient => ingredient.ingredient.toLowerCase())
         ).flat()
+    return Array.from(new Set(ingredients))
+}
+
+// Listbox : Récupération et création de la liste d'ingrédients 
+function displayIngredientsSelect() {
+    const ingredients = getIngredientsFromRecipes(recipes)
     const select = new Select(
         Array.from(new Set(ingredients)),
         'ingredient',
         'Ingrédient',
         'Recherchez vos ingrédients',
+        'tri-ingredients',
         (ingredient) => {
             selectedIngredients.push(ingredient)
             const listElement = document.createElement('li')
@@ -83,14 +89,20 @@ function displayIngredientsSelect() {
     triIngredients.appendChild(select.render())
 }
 
+function getAppliancesFromRecipes(recipes){
+    const appliances = recipes.map(recipe => recipe.appliance.toLowerCase())
+    return Array.from(new Set(appliances))
+}
+
 // Listbox : Récupération et création de la liste d'appareils
 function displayAppliancesSelect() {
-    const appliances = recipes.map(recipe => recipe.appliance.toLowerCase())
+    const appliances = getAppliancesFromRecipes(recipes)
     const select = new Select(
         Array.from(new Set(appliances)),
         'appareil',
         'Appareils',
         'Recherchez vos appareils',
+        'tri-appareils',
         (appliance) => {
             selectedAppliances.push(appliance)
             const listElement = document.createElement('li')
@@ -126,16 +138,22 @@ function displayAppliancesSelect() {
     triIngredients.appendChild(select.render())
 }
 
-// Listbox : Récupération et création de la liste d'ustensiles 
-function displayUstensilsSelect() {
+function getUstensilsFromRecipes(recipes){
     const ustensils = recipes
         .map(recipe => recipe.ustensils.map(ustensil => ustensil.toLowerCase()))
         .flat()
+    return Array.from(new Set(ustensils))
+}
+
+// Listbox : Récupération et création de la liste d'ustensiles 
+function displayUstensilsSelect() {
+    const ustensils = getUstensilsFromRecipes(recipes)
     const select = new Select(
         Array.from(new Set(ustensils)),
         'ustensil',
         'Ustensiles',
         'Recherchez vos ustensiles',
+        'tri-ustensiles',
         (ustensil) => {
             selectedUstensiles.push(ustensil)
             const listElement = document.createElement('li')
@@ -263,6 +281,10 @@ function search() {
             searchByUstensils(recipe) &&
             searchByInput(recipe);
     });
+
+    selects[0].setData(getIngredientsFromRecipes(filteredRecipes))
+    selects[1].setData(getAppliancesFromRecipes(filteredRecipes))
+    selects[2].setData(getUstensilsFromRecipes(filteredRecipes))
 
     // Récupérer l'élément HTML représentant la section des cartes de recettes
     const recipeSection = document.getElementById('cards-container');
