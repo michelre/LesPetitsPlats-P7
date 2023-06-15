@@ -195,40 +195,6 @@ function displayUstensilsSelect() {
 const searchBarInput = document.getElementById('searchBar-input');
 searchBarInput.addEventListener('input', search);
 
-// Fonction de recherche
-function performSearch() {
-    // Étape 1 : Récupérer l'entrée de recherche
-    const searchInput = searchBarInput.value;
-
-    // Étape 2 : Convertir l'entrée de recherche en minuscules
-    const searchTerm = searchInput.toLowerCase();
-
-    // Étape 3 : Parcourir les recettes
-    let filteredRecipes = [];
-    for (let i = 0; i < recipes.length; i++) {
-        const recipe = recipes[i];
-
-        // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
-        const recipeTitle = recipe.name.toLowerCase();
-        const recipeDescription = recipe.description.toLowerCase();
-        // Si le mot clé est inclus dans les ingrédients, ajouter la recette dans filteredRecipes
-        if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
-            // Étape 5 : Ajouter la recette à la liste de résultats
-            filteredRecipes.push(recipe);
-        }
-    }
-
-    // Étape 6 : Afficher les recettes correspondantes
-    const recipeSection = document.getElementById('cards-container');
-    recipeSection.innerHTML = '';
-    filteredRecipes.forEach((recipe) => {
-        const recipeTemplate = recipeFactory(recipe);
-        const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
-        recipeSection.appendChild(recipeCardDOM);
-    });
-}
-
-
 // Fonction générique prenant une recette en paramètre et effectuant une recherche basée sur une entrée de recherche
 function searchByInput(recipe) {
     // Étape 1 : Récupérer l'entrée de recherche 
