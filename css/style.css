@@ -257,7 +257,8 @@ main {
     overflow: hidden;
 
     /* TEST AJOUT IMG */
-    background-image: url('/assets/card-test.jpg');
+    background: url('https://michelre.github.io/LesPetitsPlats-P7/assets/card-test.jpg') no-repeat center;
+    background-size: cover;
 }
 
 .card-img img {
