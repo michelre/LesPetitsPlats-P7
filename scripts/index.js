@@ -11,7 +11,7 @@ const tags = document.querySelector('.tags')
 
 // Récupération des différentes recettes via un fetch
 async function getRecipes() {
-    const res = await fetch("../data/recipes.json")
+    const res = await fetch("https://michelre.github.io/LesPetitsPlats-P7/data/recipes.json")
     return await res.json()
 }
 
