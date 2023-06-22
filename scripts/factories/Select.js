@@ -1,6 +1,6 @@
 // Class générant les fonctionnalités de filtrage des listboxs 
 class Select {
-    constructor(data, type, name, placeholder, onClickElement, onOpened) {
+    constructor(data, type, name, placeholder, className, onClickElement, onOpened) {
         this.data = data
         this.filteredData = data
         this.type = type
@@ -9,6 +9,7 @@ class Select {
         this.onClickElement = onClickElement
         this.onOpened = onOpened;
         this.isOpened = false
+        this.className = className;
     }
 
     // Méthode créant la liste d'options déroulante des listboxs
@@ -44,6 +45,23 @@ class Select {
         this.chevron.classList.add('opened')
         this.elements.classList.add('active')
         this.isOpened = true
+    }
+
+    setData(data){
+        this.data = data
+        this.filteredData = data
+
+        this.elements = this.createListOptions()
+
+        const listboxOptions = document.querySelector(`.${this.className} .listbox-options`)
+        listboxOptions.remove()
+
+        const divSelect = document.querySelector(`.${this.className} .listbox-div`)
+        divSelect.appendChild(this.elements)
+
+        if(this.isOpened){
+            this.open();
+        }
     }
 
     // Création du DOM Listbox

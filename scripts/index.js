@@ -36,18 +36,24 @@ function displayRecipes() {
     })
 }
 
-// Listbox : Récupération et création de la liste d'ingrédients 
-function displayIngredientsSelect() {
+function getIngredientsFromRecipes(recipes){
     const ingredients = recipes
         .map(recipe =>
             recipe.ingredients
                 .map(ingredient => ingredient.ingredient.toLowerCase())
         ).flat()
+    return Array.from(new Set(ingredients))
+}
+
+// Listbox : Récupération et création de la liste d'ingrédients 
+function displayIngredientsSelect() {
+    const ingredients = getIngredientsFromRecipes(recipes)
     const select = new Select(
         Array.from(new Set(ingredients)),
         'ingredient',
         'Ingrédient',
         'Recherchez vos ingrédients',
+        'tri-ingredients',
         (ingredient) => {
             selectedIngredients.push(ingredient)
             const listElement = document.createElement('li')
@@ -83,14 +89,20 @@ function displayIngredientsSelect() {
     triIngredients.appendChild(select.render())
 }
 
+function getAppliancesFromRecipes(recipes){
+    const appliances = recipes.map(recipe => recipe.appliance.toLowerCase())
+    return Array.from(new Set(appliances))
+}
+
 // Listbox : Récupération et création de la liste d'appareils
 function displayAppliancesSelect() {
-    const appliances = recipes.map(recipe => recipe.appliance.toLowerCase())
+    const appliances = getAppliancesFromRecipes(recipes)
     const select = new Select(
         Array.from(new Set(appliances)),
         'appareil',
         'Appareils',
         'Recherchez vos appareils',
+        'tri-appareils',
         (appliance) => {
             selectedAppliances.push(appliance)
             const listElement = document.createElement('li')
@@ -126,16 +138,22 @@ function displayAppliancesSelect() {
     triIngredients.appendChild(select.render())
 }
 
-// Listbox : Récupération et création de la liste d'ustensiles 
-function displayUstensilsSelect() {
+function getUstensilsFromRecipes(recipes){
     const ustensils = recipes
         .map(recipe => recipe.ustensils.map(ustensil => ustensil.toLowerCase()))
         .flat()
+    return Array.from(new Set(ustensils))
+}
+
+// Listbox : Récupération et création de la liste d'ustensiles 
+function displayUstensilsSelect() {
+    const ustensils = getUstensilsFromRecipes(recipes)
     const select = new Select(
         Array.from(new Set(ustensils)),
         'ustensil',
         'Ustensiles',
         'Recherchez vos ustensiles',
+        'tri-ustensiles',
         (ustensil) => {
             selectedUstensiles.push(ustensil)
             const listElement = document.createElement('li')
@@ -175,41 +193,7 @@ function displayUstensilsSelect() {
 /* Algorithme de filtrage des recettes (boucle for) - Input principal - Titre et description */
 // Sélection de l'élément input et ajout d'un gestionnaire d'événement de saisie
 const searchBarInput = document.getElementById('searchBar-input');
-searchBarInput.addEventListener('input', performSearch);
-
-// Fonction de recherche
-function performSearch() {
-    // Étape 1 : Récupérer l'entrée de recherche
-    const searchInput = searchBarInput.value;
-
-    // Étape 2 : Convertir l'entrée de recherche en minuscules
-    const searchTerm = searchInput.toLowerCase();
-
-    // Étape 3 : Parcourir les recettes
-    let filteredRecipes = [];
-    for (let i = 0; i < recipes.length; i++) {
-        const recipe = recipes[i];
-
-        // Étape 4 : Comparer le titre et la description avec l'entrée de recherche
-        const recipeTitle = recipe.name.toLowerCase();
-        const recipeDescription = recipe.description.toLowerCase();
-        // Si le mot clé est inclus dans les ingrédients, ajouter la recette dans filteredRecipes
-        if (recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)) {
-            // Étape 5 : Ajouter la recette à la liste de résultats
-            filteredRecipes.push(recipe);
-        }
-    }
-
-    // Étape 6 : Afficher les recettes correspondantes
-    const recipeSection = document.getElementById('cards-container');
-    recipeSection.innerHTML = '';
-    filteredRecipes.forEach((recipe) => {
-        const recipeTemplate = recipeFactory(recipe);
-        const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
-        recipeSection.appendChild(recipeCardDOM);
-    });
-}
-
+searchBarInput.addEventListener('input', search);
 
 // Fonction générique prenant une recette en paramètre et effectuant une recherche basée sur une entrée de recherche
 function searchByInput(recipe) {
@@ -222,9 +206,15 @@ function searchByInput(recipe) {
     // Convertir le titre de la recette et la description de la recette en minuscules
     const recipeTitle = recipe.name.toLowerCase();
     const recipeDescription = recipe.description.toLowerCase();
+    const recipeIngredients = recipe
+        .ingredients
+        .filter(({ingredient}) => ingredient.toLowerCase().includes(searchTerm))
+
 
     // Si le mot clé est inclus dans le titre ou la description de la recette, retourner true
-    return recipeTitle.includes(searchTerm) || recipeDescription.includes(searchTerm)
+    return recipeTitle.includes(searchTerm)
+        || recipeDescription.includes(searchTerm)
+        || recipeIngredients.length > 0
 }
 
 // Algorithme de recherche spécifique à l'input de la listbox Ingrédients
@@ -264,6 +254,10 @@ function search() {
             searchByInput(recipe);
     });
 
+    selects[0].setData(getIngredientsFromRecipes(filteredRecipes))
+    selects[1].setData(getAppliancesFromRecipes(filteredRecipes))
+    selects[2].setData(getUstensilsFromRecipes(filteredRecipes))
+
     // Récupérer l'élément HTML représentant la section des cartes de recettes
     const recipeSection = document.getElementById('cards-container');
 
@@ -277,6 +271,12 @@ function search() {
         recipeSection.appendChild(recipeCardDOM);
     });
 }
+
+/*
+Conclusion des tests algorithmiques 
+Filter est plus lisible (on in crémente pas sur des boucles)
+Le for est plus rapide 
+*/
 
 /*
 // Méthode 2 - BOUCLE FOR : Fonction effectuant une recherche globale sur les recettes en fonction des critères de recherche
@@ -316,6 +316,22 @@ function search() {
 
 /*
 Conclusion des tests algorithmiques 
-Filter est plus lisible (on in crémente pas sur des boucles)
+Filter est plus lisible (on in crémente pas sur des boucles), mais plus lent
 Le for est plus rapide 
+*/
+
+/* Création de la nouvelle branche pour l'algorithme 2 
+Enlever la méthode 1 et décommenter la méthode 2
+git checkout -b algo2 
+git status pour check 
+git add script/index.js
+git commit -m "feat()": Algo 2 avec une boucle for"
+git push origin algo2
+git checkout master pour retourner sur master (branche principale)
+
+Ajouter les modifications de master à algo2 pour toujours l'avoir à jour
+git checkout algo2
+git rebase master
+(git rebase master --continue si ça ne marche pas)
+git push -f origin algo2
 */
