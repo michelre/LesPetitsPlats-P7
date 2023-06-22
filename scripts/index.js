@@ -277,3 +277,61 @@ Conclusion des tests algorithmiques
 Filter est plus lisible (on in crémente pas sur des boucles)
 Le for est plus rapide 
 */
+
+/*
+// Méthode 2 - BOUCLE FOR : Fonction effectuant une recherche globale sur les recettes en fonction des critères de recherche
+function search() {
+    let filteredRecipes = [];
+    // Parcourir toutes les recettes
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
+
+        // Vérifier si la recette satisfait tous les critères de recherche
+        if (
+            searchByIngredients(recipe) &&
+            searchByAppliances(recipe) &&
+            searchByUstensils(recipe) &&
+            searchByInput(recipe)
+        ) {
+            // Ajouter la recette filtrée au tableau des recettes filtrées
+            filteredRecipes.push(recipe);
+        }
+    }
+
+    // Récupérer l'élément HTML représentant la section des cartes de recettes
+    const recipeSection = document.getElementById('cards-container');
+
+    // Vider le contenu précédent de la section des cartes de recettes
+    recipeSection.innerHTML = '';
+
+    // Pour chaque recette filtrée, générer une carte de recette et l'ajouter à la section des cartes de recettes
+    filteredRecipes.forEach((recipe) => {
+        const recipeTemplate = recipeFactory(recipe);
+        const recipeCardDOM = recipeTemplate.getRecipesCardDOM();
+        recipeSection.appendChild(recipeCardDOM);
+    });
+}
+*/
+
+
+/*
+Conclusion des tests algorithmiques 
+Filter est plus lisible (on in crémente pas sur des boucles), mais plus lent
+Le for est plus rapide 
+*/
+
+/* Création de la nouvelle branche pour l'algorithme 2 
+Enlever la méthode 1 et décommenter la méthode 2
+git checkout -b algo2 
+git status pour check 
+git add script/index.js
+git commit -m "feat()": Algo 2 avec une boucle for"
+git push origin algo2
+git checkout master pour retourner sur master (branche principale)
+
+Ajouter les modifications de master à algo2 pour toujours l'avoir à jour
+git checkout algo2
+git rebase master
+(git rebase master --continue si ça ne marche pas)
+git push -f origin algo2
+*/
